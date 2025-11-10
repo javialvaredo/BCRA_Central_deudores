@@ -26,6 +26,15 @@ Permite consultar:
    ```bash
    git clone https://github.com/tuusuario/central-de-deudores-bcra.git
    cd central-de-deudores-bcra
+   git clone https://github.com/tuusuario/BRCA_Api.git
+  cd central_deudores_BCRA
+  python -m venv venv
+  venv\Scripts\activate
+  pip install -r requirements.txt
+
+
+
+
 🧩 Notas técnicas
 
 El programa intenta primero una conexión segura (SSL).
