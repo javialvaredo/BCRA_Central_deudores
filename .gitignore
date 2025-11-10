@@ -1,0 +1,28 @@
+# Entorno virtual
+venv/
+.env
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de logs o depuración
+*.log
+
+# Configuración de VSCode o IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos generados o cache
+*.bak
+*.tmp
+
+# Dependencias descargadas por pip
+pip-wheel-metadata/
