@@ -71,7 +71,7 @@ class CentralDeDeudoresApp:
             return
 
         except SSLError:
-            # Reintenta sin verificación SSL
+            # Reintenta sin verificación SSL (la pagina BCRA da error)
             r = self.session.get(url, timeout=10, verify=False)
             if r.status_code == 404:
                 self.result.insert(tk.END, "⚠️ No se encontraron datos para este CUIT.")
@@ -84,15 +84,17 @@ class CentralDeDeudoresApp:
         except RequestException as e:
             self.result.insert(tk.END, f"❌ Error al consultar la API:\n{e}")
 
-    
     def _mostrar_datos(self, data):
-        """Muestra los datos de forma legible (sin formato JSON)."""
+        """Muestra los datos de forma legible (sin formato JSON) y omite valores booleanos."""
         texto = ""
 
         def formatear(item, nivel=0):
             indent = "  " * nivel
             if isinstance(item, dict):
                 for k, v in item.items():
+                    # 🔹 Ignorar valores booleanos
+                    if isinstance(v, bool):
+                        continue
                     if isinstance(v, (dict, list)):
                         texto_local.append(f"{indent}{k}:")
                         formatear(v, nivel + 1)
@@ -103,6 +105,9 @@ class CentralDeDeudoresApp:
                     texto_local.append(f"{indent}- Elemento {i}:")
                     formatear(v, nivel + 1)
             else:
+                # 🔹 Ignorar valores booleanos sueltos también
+                if isinstance(item, bool):
+                    return
                 texto_local.append(f"{indent}{item}")
 
         texto_local = []
@@ -113,6 +118,7 @@ class CentralDeDeudoresApp:
             texto = "⚠️ No se encontraron datos para mostrar."
 
         self.result.insert(tk.END, texto.strip())
+
 
 
 
